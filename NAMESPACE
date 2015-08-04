@@ -1,0 +1,8 @@
+import("methods")
+import("utils")
+import("ergm")
+exportMethods("gof")
+exportMethods("getformula")
+exportMethods("interpret")
+export("is.mat.directed")
+export("is.mat.onemode")

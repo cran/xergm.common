@@ -1,0 +1,12 @@
+25add27911964cabfbd5fc2fa64521fd *DESCRIPTION
+11d6cce0fccedf3c57cd5127c8215d4e *NAMESPACE
+ae0a90330dc09d67bd166f3841def61a *R/xergm.common.R
+cf66e37674179e746ac04afa2f095063 *data/chemnet.rda
+7695504571a3e96b502ee5d3fd675186 *data/knecht.rda
+728a2ab1bfe457105be882599f451521 *inst/CITATION
+919e534b313324cd8a936ce1ca9e6bd7 *man/chemnet.Rd
+56c159b1f482a5966749cd5a7e22cf87 *man/getformula.Rd
+37d2bb2fa308db622245b9c23a514a1f *man/gof.Rd
+0a0064b83acbbafccb78845467708ff6 *man/interpret.Rd
+69aef1d8c4c029ea7baaccd4adf32ce7 *man/is.mat.onemode.Rd
+05a1e21bce7a56a4d3acf9c1bcaf42e8 *man/knecht.Rd
