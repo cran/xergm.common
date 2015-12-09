@@ -1,12 +1,12 @@
-fc518c6f37e60547190ab1a2b721e19a *DESCRIPTION
+319fb20142fe2b0fc90faca924dd9565 *DESCRIPTION
 e4a9d6465999afd6f4b45d56c1c26f55 *NAMESPACE
-214f876d3b008ed04d82eaf615583d53 *R/preprocess.R
+74fcdee80660b9c1da9306fb0c58bb35 *R/preprocess.R
 4ed57dcd1b9d2d14c94a25697b19b467 *R/xergm.common.R
-693eeeb199758a5bfab0713e3f4439b6 *data/chemnet.rda
-bf816f0fb6f521cf26e02a8c000af1a5 *data/knecht.rda
+bf098dc35e8495303cb6f04acd136112 *data/chemnet.rda
+345b8119bf1a8c0ef5031edc6d1b19fd *data/knecht.rda
 728a2ab1bfe457105be882599f451521 *inst/CITATION
 c77b1445d163134c32c57411d2e72926 *man/adjust.Rd
-919e534b313324cd8a936ce1ca9e6bd7 *man/chemnet.Rd
+fa3f25c1ca4b4e07265809a6c0f38bef *man/chemnet.Rd
 56c159b1f482a5966749cd5a7e22cf87 *man/getformula.Rd
 37d2bb2fa308db622245b9c23a514a1f *man/gof.Rd
 0367097f7493706e5fcad8bf1a2f9756 *man/handleMissings.Rd

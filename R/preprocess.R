@@ -18,10 +18,10 @@ is.mat.directed <- function(mat) {
   if (nrow(mat) != ncol(mat)) {
     return(FALSE)
   } else if (!is.null(rownames(mat)) && !is.null(colnames(mat)) 
-      && any(rownames(mat) != colnames(mat))) {
+      && any(rownames(mat) != colnames(mat), na.rm = TRUE)) {
     return(FALSE)
   } else {
-    if (any(mat != t(mat))) {
+    if (any(as.matrix(mat) != t(as.matrix(mat)), na.rm = TRUE)) {
       return(TRUE)
     } else {
       return(FALSE)
@@ -467,6 +467,26 @@ adjust <- function(source, target, remove = TRUE, add = TRUE, value = NA,
     }
   }
   
+  # impute row or column labels if only one of them is present
+  for (i in 1:length(sources)) {
+    if (is.null(rownames(sources[[i]])) && !is.null(colnames(sources[[i]])) && 
+        nrow(sources[[i]]) == ncol(sources[[i]])) {
+      rownames(sources[[i]]) <- colnames(sources[[i]])
+    }
+    if (is.null(colnames(sources[[i]])) && !is.null(rownames(sources[[i]])) && 
+        nrow(sources[[i]]) == ncol(sources[[i]])) {
+      colnames(sources[[i]]) <- rownames(sources[[i]])
+    }
+    if (is.null(rownames(targets[[i]])) && !is.null(colnames(targets[[i]])) && 
+        nrow(targets[[i]]) == ncol(targets[[i]])) {
+      rownames(targets[[i]]) <- colnames(targets[[i]])
+    }
+    if (is.null(colnames(targets[[i]])) && !is.null(rownames(targets[[i]])) && 
+        nrow(targets[[i]]) == ncol(targets[[i]])) {
+      colnames(targets[[i]]) <- rownames(targets[[i]])
+    }
+  }
+  
   # go through sources and targets and do the actual adjustment
   for (i in 1:length(sources)) {
     if (!is.vector(sources[[i]]) && !class(sources[[i]]) %in% c("matrix", 
@@ -605,16 +625,18 @@ adjust <- function(source, target, remove = TRUE, add = TRUE, value = NA,
         add.col.indices <- sapply(add.col.indices, function(x) x + nr)
         combined.indices <- c(add.row.indices, add.col.indices)
         for (j in 1:length(sources.attributes[[i]])) {
-          for (k in 1:length(combined.indices)) {
-            at1 <- sources.attributes[[i]][[j]][0:(combined.indices[k] - 1)]
-            at2 <- sources.attributes[[i]][[j]][combined.indices[k]:length(
-                sources.attributes[[i]][[j]])]
-            if (sources.attribnames[[i]][j] == "vertex.names") {
-              sources.attributes[[i]][[j]] <- c(at1, add.col.labels[j], at2)
-            } else if (sources.attribnames[[i]][j] == "na") {
-              sources.attributes[[i]][[j]] <- c(at1, TRUE, at2)
-            } else {
-              sources.attributes[[i]][[j]] <- c(at1, value, at2)
+          if (length(combined.indices) > 0) {
+            for (k in 1:length(combined.indices)) {
+              at1 <- sources.attributes[[i]][[j]][0:(combined.indices[k] - 1)]
+              at2 <- sources.attributes[[i]][[j]][combined.indices[k]:length(
+                  sources.attributes[[i]][[j]])]
+              if (sources.attribnames[[i]][j] == "vertex.names") {
+                sources.attributes[[i]][[j]] <- c(at1, add.col.labels[j], at2)
+              } else if (sources.attribnames[[i]][j] == "na") {
+                sources.attributes[[i]][[j]] <- c(at1, TRUE, at2)
+              } else {
+                sources.attributes[[i]][[j]] <- c(at1, value, at2)
+              }
             }
           }
         }
@@ -685,7 +707,7 @@ adjust <- function(source, target, remove = TRUE, add = TRUE, value = NA,
       }
       removed.rows <- which(!1:nrow(as.matrix(sources[[i]])) %in% 
           keep.row.indices)
-      removed.columns <- which(!1:nrow(as.matrix(sources[[i]])) %in% 
+      removed.columns <- which(!1:ncol(as.matrix(sources[[i]])) %in% 
           keep.col.indices)
       
       sources[[i]] <- as.matrix(sources[[i]][keep.row.indices, 
@@ -708,17 +730,25 @@ adjust <- function(source, target, remove = TRUE, add = TRUE, value = NA,
     }
     
     # sort source (and attributes) according to row and column names of target
-    if (length(sources.attributes) > 0) {
-      for (j in 1:length(sources.attributes[[i]])) {
-        if (!is.null(sources.attributes[[i]][[j]]) && 
-          length(sources.attributes[[i]][[j]]) > 0) {
-          names(sources.attributes[[i]][[j]]) <- rownames(sources[[i]])
-          sources.attributes[[i]][[j]] <- 
-              sources.attributes[[i]][[j]][rownames(sources[[i]])]
-        }
-      }
-    }
-    
+#    if (length(sources.attributes[[i]]) > 0) {
+#      for (j in 1:length(sources.attributes[[i]])) {
+#        if (!is.null(sources.attributes[[i]][[j]]) && 
+#            length(sources.attributes[[i]][[j]]) > 0) {
+#          if (sources.onemode[[i]] == TRUE) {
+#            names(sources.attributes[[i]][[j]]) <- rownames(sources[[i]])
+#            sources.attributes[[i]][[j]] <- 
+#                sources.attributes[[i]][[j]][rownames(sources[[i]])]
+#          } else {
+#            names(sources.attributes[[i]][[j]]) <- c(rownames(sources[[i]]), 
+#                rownames(sources[[i]]))
+#            sources.attributes[[i]][[j]] <- 
+#                c(sources.attributes[[i]][[j]][rownames(sources[[i]])], 
+#                sources.attributes[[i]][[j]][colnames(sources[[i]])])
+#          }
+#        }
+#      }
+#    }
+#    
     if (sources.types[[i]] %in% c("matrix", "network") && 
         targets.types[[i]] %in% c("matrix", "network") && 
         nrow(sources[[i]]) == nrow(targets[[i]]) && 
@@ -942,7 +972,6 @@ preprocess <- function(object, ..., lag = FALSE, covariate = FALSE,
       }  # result if covariate = TRUE and lag = TRUE
     }
   }
-  
   # backward adjustment for dependent networks when lagged cov are present
   if (lag == TRUE && t > 1) {
     backward <- l
