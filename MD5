@@ -1,11 +1,14 @@
-319fb20142fe2b0fc90faca924dd9565 *DESCRIPTION
-e4a9d6465999afd6f4b45d56c1c26f55 *NAMESPACE
-74fcdee80660b9c1da9306fb0c58bb35 *R/preprocess.R
-4ed57dcd1b9d2d14c94a25697b19b467 *R/xergm.common.R
-bf098dc35e8495303cb6f04acd136112 *data/chemnet.rda
-345b8119bf1a8c0ef5031edc6d1b19fd *data/knecht.rda
+7c3ba78ddaa3715e9367186b6c33365a *DESCRIPTION
+31549bb14c229cd4684b8e51fd2a44b0 *NAMESPACE
+ce9f88613726bd4744b53aff8588f619 *R/preprocess.R
+25900c4e5a0008d6e21ca080043a88c7 *R/xergm.common.R
+803770499d76ea59d1b3fc041cc227ba *data/alliances.RData
+cf66e37674179e746ac04afa2f095063 *data/chemnet.rda
+7695504571a3e96b502ee5d3fd675186 *data/knecht.rda
 728a2ab1bfe457105be882599f451521 *inst/CITATION
 c77b1445d163134c32c57411d2e72926 *man/adjust.Rd
+03d6d2b2b58d153c716e16e73b7efb0b *man/alliances.Rd
+129f8e6baa9559980a41c240ea3378f1 *man/checkdegeneracy.Rd
 fa3f25c1ca4b4e07265809a6c0f38bef *man/chemnet.Rd
 56c159b1f482a5966749cd5a7e22cf87 *man/getformula.Rd
 37d2bb2fa308db622245b9c23a514a1f *man/gof.Rd
@@ -13,4 +16,4 @@ fa3f25c1ca4b4e07265809a6c0f38bef *man/chemnet.Rd
 0a0064b83acbbafccb78845467708ff6 *man/interpret.Rd
 69aef1d8c4c029ea7baaccd4adf32ce7 *man/is.mat.onemode.Rd
 05a1e21bce7a56a4d3acf9c1bcaf42e8 *man/knecht.Rd
-f5d16f010d1dcbf3b8e79cc7e263c910 *man/preprocess.Rd
+8bd38009f05fafb6e66c1ea070fc2279 *man/preprocess.Rd
